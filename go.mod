@@ -1,4 +1,4 @@
-module github.com/disintegration/imaging
+module github.com/magicdvd/imaging
 
 go 1.17
 
