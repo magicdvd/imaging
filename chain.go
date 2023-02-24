@@ -66,7 +66,7 @@ func (c *Chain) GaussianBlur(sigma float64, radius int) *Chain {
 	return c
 }
 
-func (c *Chain) StackBlur(sigma float64, radius int) *Chain {
+func (c *Chain) StackBlur(radius int) *Chain {
 	if c.err != nil {
 		return c
 	}
