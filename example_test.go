@@ -22,7 +22,7 @@ func Example() {
 	src = imaging.Resize(src, 200, 0, imaging.Lanczos)
 
 	// Create a blurred version of the image.
-	img1 := imaging.Blur(src, 5)
+	img1 := imaging.GaussianBlur(src, 5)
 
 	// Create a grayscale version of the image with higher contrast and sharpness.
 	img2 := imaging.Grayscale(src)

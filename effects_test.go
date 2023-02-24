@@ -81,7 +81,7 @@ func TestBlur(t *testing.T) {
 	}
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
-			got := Blur(tc.src, tc.sigma)
+			got := GaussianBlur(tc.src, tc.sigma)
 			if !compareNRGBA(got, tc.want, 0) {
 				t.Fatalf("got result %#v want %#v", got, tc.want)
 			}
@@ -94,7 +94,7 @@ func TestBlurGolden(t *testing.T) {
 		"out_blur_0.5.png": 0.5,
 		"out_blur_1.5.png": 1.5,
 	} {
-		got := Blur(testdataFlowersSmallPNG, sigma)
+		got := GaussianBlur(testdataFlowersSmallPNG, sigma)
 		want, err := Open("testdata/" + name)
 		if err != nil {
 			t.Fatalf("failed to open image: %v", err)
@@ -108,7 +108,7 @@ func TestBlurGolden(t *testing.T) {
 func BenchmarkBlur(b *testing.B) {
 	b.ReportAllocs()
 	for i := 0; i < b.N; i++ {
-		Blur(testdataBranchesJPG, 3)
+		GaussianBlur(testdataBranchesJPG, 3)
 	}
 }
 

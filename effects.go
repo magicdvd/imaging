@@ -9,19 +9,21 @@ func gaussianBlurKernel(x, sigma float64) float64 {
 	return math.Exp(-(x*x)/(2*sigma*sigma)) / (sigma * math.Sqrt(2*math.Pi))
 }
 
-// Blur produces a blurred version of the image using a Gaussian function.
+// GaussianBlur produces a blurred version of the image using a Gaussian function.
 // Sigma parameter must be positive and indicates how much the image will be blurred.
 //
 // Example:
 //
 //	dstImage := imaging.Blur(srcImage, 3.5)
 //
-func Blur(img image.Image, sigma float64) *image.NRGBA {
+func GaussianBlur(img image.Image, sigma float64, ra ...int) *image.NRGBA {
 	if sigma <= 0 {
 		return Clone(img)
 	}
-
 	radius := int(math.Ceil(sigma * 3.0))
+	if len(ra) > 0 {
+		radius = ra[0]
+	}
 	kernel := make([]float64, radius+1)
 
 	for i := 0; i <= radius; i++ {
@@ -145,7 +147,7 @@ func Sharpen(img image.Image, sigma float64) *image.NRGBA {
 
 	src := newScanner(img)
 	dst := image.NewNRGBA(image.Rect(0, 0, src.w, src.h))
-	blurred := Blur(img, sigma)
+	blurred := GaussianBlur(img, sigma)
 
 	parallel(0, src.h, func(ys <-chan int) {
 		scanLine := make([]uint8, src.w*4)
