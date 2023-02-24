@@ -12,6 +12,14 @@ type Chain struct {
 	err error
 }
 
+func (c *Chain) Err() error {
+	return c.err
+}
+
+func (c *Chain) Image() image.Image {
+	return c.img
+}
+
 func DecodeToChain(r io.Reader, opts ...DecodeOption) (*Chain, error) {
 	m, err := Decode(r, opts...)
 	if err != nil {
