@@ -1,6 +1,7 @@
 package imaging
 
 import (
+	"bytes"
 	"image"
 	"image/jpeg"
 	"image/png"
@@ -101,4 +102,22 @@ func (c *Chain) JPEGWriter(w io.Writer, quality int) error {
 	return jpeg.Encode(w, c.img, &jpeg.Options{
 		Quality: quality,
 	})
+}
+
+func (c *Chain) PNGReader() (*bytes.Reader, error) {
+	buf := new(bytes.Buffer)
+	err := c.PNGWriter(buf)
+	if err != nil {
+		return nil, err
+	}
+	return bytes.NewReader(buf.Bytes()), nil
+}
+
+func (c *Chain) JPEGReader(quality int) (*bytes.Reader, error) {
+	buf := new(bytes.Buffer)
+	err := c.JPEGWriter(buf, quality)
+	if err != nil {
+		return nil, err
+	}
+	return bytes.NewReader(buf.Bytes()), nil
 }
